@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [login] = useState(false);
+  useSelector((state) => console.log(state));
   return (
     <>
       <nav>
