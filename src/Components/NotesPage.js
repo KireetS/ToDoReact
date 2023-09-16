@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import LoadingBar from "react-top-loading-bar";
 import {
   getTodoItems,
   postTodoItems,
@@ -7,6 +8,7 @@ import {
 } from "../features/todo/todoSlice";
 const NotesPage = () => {
   const { todoItems, isLoading } = useSelector((store) => store.todo);
+  const [progress, setProgress] = useState(0);
   const dispatch = useDispatch();
   const [pressed, setPressed] = useState(false);
   useEffect(() => {
@@ -16,15 +18,16 @@ const NotesPage = () => {
   const [name, setName] = useState("");
   const date = "12/1/23";
   const tag = "personal";
-  if (isLoading) {
-    return (
-      <>
-        <div>loading</div>
-      </>
-    );
-  }
+  useEffect(() => {
+    isLoading ? setProgress(0) : setProgress(100);
+  }, [isLoading]);
   return (
     <>
+      <LoadingBar
+        color="#f11946"
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
       <div className="flex bg-slate-950 min-h-screen flex-col flex-grow items-center p-10 ">
         <div>
           <textarea
