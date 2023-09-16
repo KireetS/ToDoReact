@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-
+import { Link } from "react-router-dom";
 const Navbar = () => {
   const [login] = useState(false);
   useSelector((state) => console.log(state));
@@ -23,10 +23,10 @@ const Navbar = () => {
             <>
               <div className="flex items-center justify-center">
                 <button className="bg-blue-500 flex items-center justify-center h-10 rounded-lg p-4 mx-2 text-white font-semibold">
-                  Login
+                  <Link to="/login">Login</Link>
                 </button>
                 <button className=" text-white font-semibold bg-blue-500 flex items-center justify-center h-10 rounded-lg p-4 mx-2">
-                  SignUp
+                  <Link to="/signup">SignUp</Link>
                 </button>
               </div>
             </>
