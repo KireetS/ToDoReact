@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 const initialState = {
-  isDone: false,
+  isLoading: true,
+  error: false,
 };
 
 export const signup = createAsyncThunk("singup/add", async (userdata) => {
@@ -19,6 +20,7 @@ export const signup = createAsyncThunk("singup/add", async (userdata) => {
     return resp.data;
   } catch (err) {
     console.error("error logging in ", err);
+    throw err;
   }
 });
 const signupSlice = createSlice({
@@ -26,13 +28,18 @@ const signupSlice = createSlice({
   initialState,
   extraReducers: {
     [signup.pending]: (state) => {
-      state.isDone = true;
+      state.isLoading = true;
+      state.error = false;
     },
     [signup.fulfilled]: (state) => {
-      state.isDone = false;
+      console.log("fulfilled");
+      state.isLoading = false;
+      state.error = false;
     },
     [signup.rejected]: (state) => {
-      state.isDone = false;
+      console.log("rejected");
+      state.isLoading = false;
+      state.error = true;
     },
   },
 });
