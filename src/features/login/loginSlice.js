@@ -1,10 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const isTokenValid = () => {
+  const token = localStorage.getItem("token");
+  return token !== null && token !== "undefined";
+};
+
 const initialState = {
   isLoading: true,
   error: false,
-  token: "",
+  login: isTokenValid(),
 };
 
 export const login = createAsyncThunk("login/", async (userdata) => {
@@ -18,7 +23,8 @@ export const login = createAsyncThunk("login/", async (userdata) => {
         },
       }
     );
-
+    localStorage.setItem("token", resp.data.token);
+    console.log(resp.data);
     return resp.data;
   } catch (err) {
     console.error("error logging in ", err);
@@ -28,11 +34,7 @@ export const login = createAsyncThunk("login/", async (userdata) => {
 const loginSlice = createSlice({
   name: "login",
   initialState,
-  reducers: {
-    addToken: (state, action) => {
-      state.token = action.payload;
-    },
-  },
+
   extraReducers: {
     [login.pending]: (state) => {
       state.isLoading = true;
@@ -50,5 +52,5 @@ const loginSlice = createSlice({
     },
   },
 });
-export const { addToken } = loginSlice.actions;
+
 export default loginSlice.reducer;

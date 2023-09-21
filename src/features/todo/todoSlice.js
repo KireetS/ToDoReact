@@ -11,8 +11,7 @@ export const getTodoItems = createAsyncThunk("todo/gettodoitems", async () => {
     const response = await axios.get("http://localhost:4000/api/todo/get", {
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUwMmEyMmRkNjdkNzYwZTVkMzM2YWFjIn0sImlhdCI6MTY5NDY3MTQwNX0.OCZv2vL6xRe0xaEcO1ZMZ25ZnVHjFbTAnSxMpS00d2I",
+        "auth-token": localStorage.getItem("token"),
       },
     });
 
@@ -32,12 +31,35 @@ export const postTodoItems = createAsyncThunk(
         {
           headers: {
             "Content-Type": "application/json",
-            "auth-token":
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUwMmEyMmRkNjdkNzYwZTVkMzM2YWFjIn0sImlhdCI6MTY5NDY3MTQwNX0.OCZv2vL6xRe0xaEcO1ZMZ25ZnVHjFbTAnSxMpS00d2I",
+            "auth-token": localStorage.getItem("token"),
           },
         }
       );
 
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+);
+
+export const updateTodoItems = createAsyncThunk(
+  "todo/updatetodoitems",
+  async (mydata) => {
+    const { data, id } = mydata;
+    try {
+      const response = await axios.put(
+        `http://localhost:4000/api/todo/update/${id}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(`http://localhost:4000/api/todo/update/${id}`);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -55,8 +77,7 @@ export const deleteTodoItems = createAsyncThunk(
         {
           headers: {
             "Content-Type": "application/json",
-            "auth-token":
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUwMmEyMmRkNjdkNzYwZTVkMzM2YWFjIn0sImlhdCI6MTY5NDY3MTQwNX0.OCZv2vL6xRe0xaEcO1ZMZ25ZnVHjFbTAnSxMpS00d2I",
+            "auth-token": localStorage.getItem("token"),
           },
         }
       );
@@ -95,6 +116,15 @@ const todoSlice = createSlice({
       state.isLoading = false;
     },
 
+    [updateTodoItems.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [updateTodoItems.fulfilled]: (state) => {
+      state.isLoading = false;
+    },
+    [updateTodoItems.rejected]: (state) => {
+      state.isLoading = false;
+    },
     [deleteTodoItems.pending]: (state) => {
       state.isLoading = true;
     },
