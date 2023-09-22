@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateTodoItems } from "../features/todo/todoSlice";
 
@@ -7,10 +7,6 @@ export default function Modal(props) {
   const { showModal, setShowModal, id, setPressed } = props;
   const [input, setInput] = useState("");
   const dispatch = useDispatch();
-  useEffect(() => {
-    console.log(id);
-    // eslint-disable-next-line
-  }, []);
   return (
     <>
       {showModal ? (

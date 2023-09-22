@@ -13,6 +13,7 @@ const NotesPage = () => {
   const dispatch = useDispatch();
   const [pressed, setPressed] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [id, setId] = useState("");
   useEffect(() => {
     dispatch(getTodoItems());
     // eslint-disable-next-line
@@ -25,6 +26,12 @@ const NotesPage = () => {
   }, [isLoading]);
   return (
     <>
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        id={id}
+        setPressed={setPressed}
+      />
       <LoadingBar
         color="#f11946"
         progress={progress}
@@ -65,12 +72,6 @@ const NotesPage = () => {
               key={item._id}
               className=" bg-slate-800 rounded-lg h-28 mx-3 w-[70vw]  my-6 p-2 sm:p-4 md:p-7 justify-between flex  items-center"
             >
-              <Modal
-                showModal={showModal}
-                setShowModal={setShowModal}
-                id={item._id}
-                setPressed={setPressed}
-              />
               <div className="flex flex-col items-start justify-around">
                 <div className="text-lg text-white font-bold">{item.name}</div>
                 <div className="text-base text-white  italic">
@@ -93,6 +94,7 @@ const NotesPage = () => {
                 <button
                   className="bg-blue-500 p-1 h-8 sm:p-2 sm:h-14 rounded-lg text-white font-semibold mx-3 my-3"
                   onClick={() => {
+                    setId(item._id);
                     setShowModal(true);
                   }}
                 >
