@@ -25,7 +25,11 @@ export const login = createAsyncThunk("login/", async (userdata) => {
     );
     localStorage.setItem("token", resp.data.token);
     console.log(resp.data);
-    return resp.data;
+    if (resp.status >= 200 || resp.status < 300) {
+      return 1;
+    } else {
+      return -1;
+    }
   } catch (err) {
     console.error("error logging in ", err);
     throw err;

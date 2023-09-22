@@ -4,12 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import LoadingBar from "react-top-loading-bar";
 import Alert from "./Alert";
 import { login } from "../features/login/loginSlice";
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
   const dispatch = useDispatch();
   const [pass, setPass] = useState("");
   const [mail, setMail] = useState("");
   const { isLoading, error } = useSelector((store) => store.login);
   const [progress, setProgress] = useState(0);
+  const navigate = useNavigate();
   const userdata = {
     email: mail,
     password: pass,
@@ -63,6 +66,10 @@ const Login = () => {
             className="rounded-lg bg-blue-500 p-3 font-semibold text-lg my-3 text-gray-200"
             onClick={() => {
               dispatch(login(userdata));
+              if (!error) {
+                navigate("/");
+                window.location.reload();
+              }
             }}
           >
             Log In

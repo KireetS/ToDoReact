@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 const Navbar = () => {
   const { login } = useSelector((store) => store.login);
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const signout = () => {
+    localStorage.removeItem("token");
+  };
+  useEffect(() => {
+    console.log("navre");
+  }, [login]);
   return (
     <>
       <nav>
@@ -10,12 +17,44 @@ const Navbar = () => {
           <div className="text-white font-bold text-3xl p-2 mx-2">ToDoList</div>
 
           {login && (
-            <div>
-              <img
-                src="https://qph.cf2.quoracdn.net/main-qimg-6d72b77c81c9841bd98fc806d702e859-lq"
-                alt="pfp"
-                className="h-12 w-12 rounded-full p-2 mx-2"
-              />
+            <div className="flex relative items-center justify-center">
+              <div>
+                <button
+                  onClick={() => {
+                    setIsNavOpen(!isNavOpen);
+                  }}
+                >
+                  <img
+                    src="https://qph.cf2.quoracdn.net/main-qimg-6d72b77c81c9841bd98fc806d702e859-lq"
+                    alt="pfp"
+                    className="h-12 w-12 rounded-full p-2 mx-2"
+                  />
+                </button>
+              </div>
+              <div
+                className={`${
+                  isNavOpen ? "block" : "hidden"
+                } absolute top-[3.75rem] left-[-4.5rem]  bg-slate-700 w-32  rounded-lg`}
+              >
+                <ul className="flex flex-col flex-grow">
+                  <li className="p-2 text-white font-semibold border-b-2 border-b-gray-500">
+                    <Link to="/settings">User Settings</Link>
+                  </li>
+                  <li className="p-2 text-white font-semibold border-b-2 border-b-gray-500">
+                    <Link to="/">Notes Page</Link>
+                  </li>
+                  <li className="p-2 text-white font-semibold">
+                    <button
+                      onClick={() => {
+                        signout();
+                        window.location.reload();
+                      }}
+                    >
+                      Sign Out
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
           )}
           {!login && (

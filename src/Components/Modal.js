@@ -36,11 +36,14 @@ export default function Modal(props) {
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <div className="flex flex-col items-center justify-center">
-                    <div>Update Note</div>
+                    <div className="text-gray-200 text-lg font-semibold">
+                      Update Note
+                    </div>
                     <div>
                       <input
                         type="text"
                         value={input}
+                        className="bg-slate-700   text-gray-200 focus:outline-none active:outline-none   p-2 h-10 rounded-lg my-3 mx-2"
                         onChange={(e) => {
                           setInput(e.target.value);
                         }}
