@@ -38,7 +38,7 @@ const Navbar = () => {
               >
                 <ul className="flex flex-col flex-grow">
                   <li className="p-2 text-white font-semibold border-b-2 border-b-gray-500">
-                    <Link to="/settings">User Settings</Link>
+                    <Link to="/upload">Upload Image</Link>
                   </li>
                   <li className="p-2 text-white font-semibold border-b-2 border-b-gray-500">
                     <Link to="/">Notes Page</Link>

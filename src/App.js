@@ -5,7 +5,7 @@ import Signup from "./Components/Signup";
 import Login from "./Components/Login";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import UserSettings from "./Components/UserSettings";
+import UploadImage from "./Components/UploadImage";
 
 function App() {
   const { login } = useSelector((store) => store.login);
@@ -20,7 +20,7 @@ function App() {
         {!login && <Route path="/signup" element={<Signup />} />}
         {!login && <Route path="/login" element={<Login />} />}
         {login && <Route path="/" element={<NotesPage />} />}
-        {login && <Route path="/settings" element={<UserSettings />} />}
+        {login && <Route path="/upload" element={<UploadImage />} />}
       </Routes>
     </>
   );
