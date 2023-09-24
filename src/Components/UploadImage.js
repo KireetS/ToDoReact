@@ -6,7 +6,6 @@ import { update } from "../features/update/updateSlice";
 const UploadImage = () => {
   const dispatch = useDispatch();
   const { profileImage } = useSelector((store) => store.update);
-  const formattedProfileImage = profileImage.replace(/\\/g, "/");
   const [image, setImage] = useState(null);
 
   const handleFileChange = (event) => {
@@ -18,7 +17,6 @@ const UploadImage = () => {
     if (image) {
       const formData = new FormData();
       formData.append("profileImage", image);
-      console.log(formattedProfileImage);
       dispatch(update(formData));
     }
   };
@@ -28,7 +26,7 @@ const UploadImage = () => {
         <div className="rounded-lg w-[50%] h-[30%] bg-slate-900 flex items-center box-border p-4">
           <div>
             <img
-              src={`../../../ToDoserver/${formattedProfileImage}`}
+              src={`http://localhost:4000/images/${profileImage}`}
               alt="pfp"
               className="w-30 h-30 rounded-full"
             />

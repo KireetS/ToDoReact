@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const { login } = useSelector((store) => store.login);
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const { profileImage } = useSelector((store) => store.update);
   const signout = () => {
     localStorage.removeItem("token");
   };
@@ -25,7 +26,7 @@ const Navbar = () => {
                   }}
                 >
                   <img
-                    src="https://qph.cf2.quoracdn.net/main-qimg-6d72b77c81c9841bd98fc806d702e859-lq"
+                    src={`http://localhost:4000/images/${profileImage}`}
                     alt="pfp"
                     className="h-12 w-12 rounded-full p-2 mx-2"
                   />
