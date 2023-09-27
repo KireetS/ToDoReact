@@ -4,22 +4,27 @@ import { Routes, Route } from "react-router-dom";
 import Signup from "./Components/Signup";
 import Login from "./Components/Login";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import UploadImage from "./Components/UploadImage";
 import { getUser } from "./features/user/userSlice";
 
 function App() {
+  const [pressed, setPressed] = useState(false);
   const dispatch = useDispatch();
   const { login } = useSelector((store) => store.login);
   useEffect(() => {
     console.log("refresh");
+    if (login) {
+      dispatch(getUser());
+    }
+    // eslint-disable-next-line
   }, [login]);
   useEffect(() => {
     if (login) {
       dispatch(getUser());
     }
     // eslint-disable-next-line
-  }, [login]);
+  }, [pressed]);
   return (
     <>
       <Navbar />
@@ -28,7 +33,12 @@ function App() {
         {!login && <Route path="/signup" element={<Signup />} />}
         {!login && <Route path="/login" element={<Login />} />}
         {login && <Route path="/" element={<NotesPage />} />}
-        {login && <Route path="/upload" element={<UploadImage />} />}
+        {login && (
+          <Route
+            path="/upload"
+            element={<UploadImage setPressed={setPressed} />}
+          />
+        )}
       </Routes>
     </>
   );

@@ -3,7 +3,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { update } from "../features/update/updateSlice";
 
-const UploadImage = () => {
+const UploadImage = (props) => {
+  const { setPressed } = props;
   const dispatch = useDispatch();
   // const { profileImage } = useSelector((store) => store.update);
   const [image, setImage] = useState(null);
@@ -41,7 +42,13 @@ const UploadImage = () => {
             />
             <button
               className="mx-2 bg-blue-500 rounded-lg p-3 my-2"
-              onClick={handleUpload}
+              onClick={() => {
+                handleUpload();
+                setPressed(true);
+                setTimeout(() => {
+                  setPressed(false);
+                }, 10);
+              }}
             >
               Upload
             </button>
