@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getUser } from "../features/user/userSlice";
 const Navbar = () => {
+  const dispatch = useDispatch();
   const { login } = useSelector((store) => store.login);
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const { profileImage } = useSelector((store) => store.update);
+  // const { profileImage } = useSelector((store) => store.update);
   const signout = () => {
     localStorage.removeItem("token");
   };
   useEffect(() => {
     console.log("navre");
+    if (login) {
+      dispatch(getUser());
+    }
+    // eslint-disable-next-line
   }, [login]);
+  const { user } = useSelector((store) => store.user);
   return (
     <>
       <nav>
@@ -26,7 +33,7 @@ const Navbar = () => {
                   }}
                 >
                   <img
-                    src={`http://localhost:4000/images/${profileImage}`}
+                    src={`http://localhost:4000/images/${user.profileImage}`}
                     alt="pfp"
                     className="h-12 w-12 rounded-full p-2 mx-2"
                   />

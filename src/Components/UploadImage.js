@@ -5,9 +5,9 @@ import { update } from "../features/update/updateSlice";
 
 const UploadImage = () => {
   const dispatch = useDispatch();
-  const { profileImage } = useSelector((store) => store.update);
+  // const { profileImage } = useSelector((store) => store.update);
   const [image, setImage] = useState(null);
-
+  const { user } = useSelector((store) => store.user);
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setImage(selectedFile);
@@ -26,7 +26,7 @@ const UploadImage = () => {
         <div className="rounded-lg w-[50%] h-[30%] bg-slate-900 flex items-center box-border p-4">
           <div>
             <img
-              src={`http://localhost:4000/images/${profileImage}`}
+              src={`http://localhost:4000/images/${user.profileImage}`}
               alt="pfp"
               className="w-30 h-30 rounded-full"
             />
