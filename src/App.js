@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import UploadImage from "./Components/UploadImage";
 import { getUser } from "./features/user/userSlice";
+import Home from "./Components/Home";
 
 function App() {
   const [pressed, setPressed] = useState(false);
@@ -33,6 +34,7 @@ function App() {
         {!login && <Route path="/signup" element={<Signup />} />}
         {!login && <Route path="/login" element={<Login />} />}
         {login && <Route path="/" element={<NotesPage />} />}
+        {!login && <Route path="/" element={<Home />} />}
         {login && (
           <Route
             path="/upload"

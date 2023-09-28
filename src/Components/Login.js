@@ -67,8 +67,10 @@ const Login = () => {
             onClick={() => {
               dispatch(login(userdata));
               if (!error) {
-                navigate("/");
-                window.location.reload();
+                if (localStorage.getItem("token")) {
+                  window.location.reload();
+                  navigate("/");
+                }
               }
             }}
           >
